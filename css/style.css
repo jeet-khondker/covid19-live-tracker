@@ -24,7 +24,6 @@ body {
     top: 50px;
     background: rgb(54, 46, 50,0.5);
     padding: 10px;
-    height: 90vh;
 }
 
 .search-container {
@@ -32,11 +31,12 @@ body {
     position: absolute;
     z-index: 100;
     top: 130px;
-    left: 100px;
-    width: 490px;
+    left: 55px;
+    width: 700px;
     height: 60px;
     background-color: #454E53;
     display: flex;
+    margin-top: 10px;
 }
 
 .search-container .search {
@@ -108,4 +108,72 @@ body {
     display: block;
     margin-top: 30px;
     padding-bottom: 30px;
+}
+
+.loader-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background: rgb(255, 255, 255, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-container h1 {
+    display: none;
+    -webkit-animation: spin 2s linear infinite;
+    animation: showhide 1s 1s linear infinite alternate;
+}
+
+@-webkit-keyframes showhide {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes showhide {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.loader {
+    border: 1px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 15px solid #ff0000;
+    border-right: 15px solid #000;
+    border-bottom: 15px solid #ff0000;
+    border-left: 15px solid #000;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    transition: display 0.5s ease-in-out;
+}
+
+@-webkit-keyframes spin {
+    0% { 
+        -webkit-transform: rotate(0deg); 
+    }
+    100% { 
+        -webkit-transform: rotate(360deg); 
+    }
+}
+
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg); 
+    }
+    100% { 
+        transform: rotate(360deg); 
+    }
 }

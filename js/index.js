@@ -7,20 +7,28 @@ async function initMap() {
 
     covidData = response.data;
 
+    console.log(covidData);
 
-
-
-
-    var tokyo = {
-        lat: 35.6762, 
-        lng: 139.6503
+    var bangladesh = {
+        lat: 23.6850, 
+        lng: 90.3563
     };
+    
 
     map = new google.maps.Map(document.getElementById('map'), {
-        center: tokyo,
+        center: bangladesh,
         zoom: 11,
         mapTypeId: "roadmap",
         zoomControl: false,
+        styles: customGMapStyles,
+        streetViewControl: false,
+        fullscreenControl: false,
+        gestureHandline: "greedy"
+    });
+
+    google.maps.event.addListenerOnce(map, "tilesloaded", function () {
+        // When page is loaded do below only for the first time
+        document.querySelector(".loader-container").remove();
     });
 
 
