@@ -3,6 +3,8 @@ A LIVE Tracking APP of COVID-19 Cases All Over The World. It is Google Maps Proj
 
 A background voice message has also been added to the APP for reminding all the precautions that need to be taken in this hard deadly time. Besides the user can also select any marker icon of any country to find out the COVID-19 latest update.
 
+![Screenshot](Screenshot.png)
+
 ## Technology Used
 HTML5, CSS3, Bootstrap, Javascript, Google Maps 
 
