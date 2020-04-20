@@ -6,8 +6,16 @@ window.onload = () => {
     input.addEventListener("input", searchCountry);
 }
 
+function noScroll() {
+    window.scrollTo(0, 0);
+}
+
 var map;
 var covidData;
+var markers = [];
+var infoWindow;
+let infos = [];
+
 
 /****************************************
    FUNCTION : GOOGLE MAP INITIALIZATION
@@ -43,6 +51,10 @@ async function initMap() {
         document.querySelector(".loader-container").remove();
     });
 
+    infoWindow = new google.maps.InfoWindow();
+
+    showCovidMarkers(covidData);
+
 }
 
 function displayCovidVirusCountries(countries) {
@@ -71,6 +83,86 @@ function displayCovidVirusCountries(countries) {
     document.querySelector(".countries-list").innerHTML = countriesHtml;
 }
 
+/****************************************
+   FUNCTION : SHOW MARKERS IN GOOGLE MAP
+ ****************************************/
+function showCovidMarkers(newCovidData) {
+    newCovidData.map((one, index) => {
+
+        var latlng = new google.maps.LatLng(
+            one["countryInfo"]["lat"],
+            one["countryInfo"]["long"]
+        );
+
+        let lastUpdated = new Date(one["updated"]).toLocaleDateString("en");
+        let country = one["country"];
+        let cases = one["cases"];
+        let deaths = one["deaths"];
+        let recovered = one["recovered"];
+        let id = one["countryInfo"]["_id"];
+        let iso2 = one["countryInfo"]["iso2"];
+        
+        createCovidMarker(latlng, lastUpdated, country, cases, deaths, recovered, id, iso2);
+    })
+}
+
+function createCovidMarker(latlng, lastUpdated, country, cases, deaths, recovered, id, iso2) {
+    let html = 
+    `
+        <div class="covid-info-country-container">
+            <div class="info-main-container">
+                <div class="info-country">
+                    ${country}
+                </div>
+                <div class="info-last-updated">
+                    <span>Last Updated:&nbsp;</span>${lastUpdated}
+                </div>
+            </div>
+            <div class="info-secondary-container">
+                <div class="info-cases">Cases:&nbsp;${cases}</div>
+                <div class="info-recovered">Recovered:&nbsp;${recovered}</div>
+                <div class="info-death">Deaths:&nbsp;${deaths}</div>
+            </div>
+        </div>
+    `
+
+    infos[iso2] = html;
+
+    var icon = {
+        url: "image/marker-corona.png",
+        scaledSize: new google.maps.Size(50, 50)
+    }
+
+    var marker = new google.maps.Marker({
+        map: map,
+        position: latlng,
+        label: iso2 + '',
+        icon: icon,
+        abc: "ahihi"
+    });
+
+    google.maps.event.addListener(marker, "click", function () {
+        infoWindow.setContent(html);
+        infoWindow.open(map, marker);
+    });
+
+    markers.push(marker);
+}
+
+/****************************
+   FUNCTION : CLICK COUNTRY
+ ****************************/
+function clickCountry(index) {
+    document.getElementById("country-input").value = '';
+    document.querySelector(".countries-list-container").style.display = "none";
+    
+    var key = index.toString();
+    let selectedMarker = markers.find(one => one.label.toLowerCase() === index.toLowerCase())
+    infoWindow.setContent(infos[key]);
+    infoWindow.open(map, selectedMarker);
+    
+}
+
 /****************************
    FUNCTION : SEARCH COUNTRY
  ****************************/
@@ -83,24 +175,20 @@ function searchCountry() {
         document.querySelector(".countries-list-container").style.display = "none";
     }
 
-    // console.log(countryName)
-
     let oldIndex = []
     
-    let countriesRessult = covidData.filter((one, index) => {
+    let countriesResult = covidData.filter((one, index) => {
         if (one["country"].toLowerCase().includes(countryName.toLowerCase())) {
             oldIndex.push(index);
             return true;
         }
     })
 
-    countriesRessult.map((one, index) => {
+    countriesResult.map((one, index) => {
         one["index"] = oldIndex[index];
     })
 
-    console.log(countriesRessult);
-    
-    displayCovidVirusCountries(countriesRessult);
+    displayCovidVirusCountries(countriesResult);
 }
 
 /************************************************

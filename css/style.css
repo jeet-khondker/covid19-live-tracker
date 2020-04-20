@@ -102,11 +102,40 @@ body {
     width: 12px;
 }
 
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+.info-main-container {
+    border-bottom: 1px solid #a3a3ab;
+    padding-bottom: 5px;
 }
+
+.info-main-container .info-country {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.info-main-container .info-last-updated {
+    font-style: italic;
+    margin-top: 2px;
+}
+
+.info-secondary-container {
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.info-cases {
+    color: #0000ff;
+}
+
+.info-recovered {
+    color: #008000;
+}
+
+.info-death {
+    color: #ff0000;
+}
+
+
 
 
 
