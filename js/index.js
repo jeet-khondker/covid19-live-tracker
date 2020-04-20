@@ -16,7 +16,6 @@ var markers = [];
 var infoWindow;
 let infos = [];
 
-
 /****************************************
    FUNCTION : GOOGLE MAP INITIALIZATION
  ****************************************/
@@ -27,8 +26,6 @@ async function initMap() {
     covidData = response.data;
 
     displayCovidVirusCountries(covidData);
-
-    console.log(covidData);
 
     var bangladesh = {
         lat: 23.6850, 
@@ -57,6 +54,9 @@ async function initMap() {
 
 }
 
+/************************************
+   FUNCTION : DISPLAY COUNTRY LISTS
+ ************************************/
 function displayCovidVirusCountries(countries) {
     let countriesHtml = '';
     
@@ -106,6 +106,9 @@ function showCovidMarkers(newCovidData) {
     })
 }
 
+/****************************************
+   FUNCTION : GOOGLE MAP MARKER CREATION
+ ****************************************/
 function createCovidMarker(latlng, lastUpdated, country, cases, deaths, recovered, id, iso2) {
     let html = 
     `
